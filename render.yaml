@@ -1,0 +1,53 @@
+# render.yaml
+# Render Blueprint: one Docker web service + one PostgreSQL database.
+# Deploy: Render dashboard -> New -> Blueprint -> pick your repo.
+services:
+  - type: web
+    name: catering-system
+    runtime: docker
+    plan: free                 # free = uploads are lost on every deploy/restart, see README
+    healthCheckPath: /up
+    autoDeploy: true
+    envVars:
+      - key: APP_NAME
+        value: Catering System
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true     # start.sh adds the "base64:" prefix Laravel needs
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_URL
+        fromDatabase:
+          name: catering-db
+          property: connectionString
+      - key: TRUSTED_PROXIES
+        value: "*"              # Render terminates HTTPS in front of the container
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: warning
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: MAIL_MAILER
+        value: log              # change to smtp + MAIL_* to send real e-mails
+      - key: ADMIN_EMAIL
+        sync: false             # you are asked for this on first deploy
+      - key: ADMIN_PASSWORD
+        sync: false             # you are asked for this on first deploy
+    # Paid plans only: keep uploaded files (payment slips, package images) across deploys.
+    # Uncomment AND change `plan: free` above to `plan: starter`.
+    # disk:
+    #   name: uploads
+    #   mountPath: /var/www/html/storage/app
+    #   sizeGB: 1
+
+databases:
+  - name: catering-db
+    plan: free
+    databaseName: catering
+    user: catering

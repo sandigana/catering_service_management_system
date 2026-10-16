@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="CaterEase">
+  <rect width="512" height="512" rx="112" fill="#ff8a00"/>
+  <circle cx="256" cy="256" r="122" fill="none" stroke="#fff" stroke-width="22"/>
+  <circle cx="256" cy="256" r="64" fill="#ffbe66"/>
+  <g stroke="#fff" stroke-linecap="round" fill="none">
+    <path d="M72 128V214M90 128V214M108 128V214M72 214H108" stroke-width="11"/>
+    <path d="M90 214V392" stroke-width="15"/>
+    <path d="M423 262V392" stroke-width="15"/>
+  </g>
+  <path d="M404 143a19 19 0 0 1 38 0V262H404Z" fill="#fff"/>
+</svg>
